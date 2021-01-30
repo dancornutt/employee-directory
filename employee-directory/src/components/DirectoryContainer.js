@@ -3,6 +3,9 @@ import SearchForm from "./SearchForm";
 import ResultList from "./ResultList";
 import API from "../utils/API";
 
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container'
+
 class DirectoryContainer extends Component {
   state = {
     search: "",
@@ -47,7 +50,15 @@ class DirectoryContainer extends Component {
   render() {
     return (
       <div>
-        <ResultList results={this.state.results} />
+        <Jumbotron fluid>
+          <Container>
+            <h1>Random People Directory</h1>
+            <p>
+              This is a random list of people to view.
+            </p>
+          </Container>
+        </Jumbotron>
+      <ResultList results={this.state.results} />
       </div>
     );
   }
