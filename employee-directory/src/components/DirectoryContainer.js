@@ -11,22 +11,24 @@ class DirectoryContainer extends Component {
 
   // When this component mounts, search the rados
   componentDidMount = () => {
-    console.log("Prior to API Call", this.state.results)
-    API.search().then( res => {
-      this.setState({results: [...res.data.results]})
-      console.log("Prior to API Call", this.state.results)
-    })
+      // console.log("Prior to API Call", this.state.results)
+      // API.search().then( res => {
+      //   this.setState({results: [...res.data.results]})
+      //   console.log("Prior to API Call", this.state.results)
+      // })
+      this.search(10);
   }
 
   order = orderType => {
       //sort list of users either asc or desc
   }
 
-  search = () => {
-    API.search()
+  search = qry => {
+    API.search(qry)
       .then(res => {
-        console.log(res);
-        this.setState({ results: res.results })
+        console.log("Prior to API Call", this.state.results);
+        this.setState({results: [...res.data.results]});
+        console.log("Post to API Call", this.state.results);
       })
       .catch(err => console.log(err));
   };
@@ -51,7 +53,7 @@ class DirectoryContainer extends Component {
   render() {
     return (
       <div>
-        {/* <ResultList results={this.state.results} /> */}
+        {/* <ResultList props={[...this.state.results]} /> */}
       </div>
     );
   }
