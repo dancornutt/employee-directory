@@ -9,19 +9,14 @@ class DirectoryContainer extends Component {
     results: []
   };
 
-  // When this component mounts, search the rados
-  componentDidMount = () => {
-      // console.log("Prior to API Call", this.state.results)
-      // API.search().then( res => {
-      //   this.setState({results: [...res.data.results]})
-      //   console.log("Prior to API Call", this.state.results)
-      // })
+  // When this component mounts, search 10 rados
+  componentDidMount() {
       this.search(10);
   }
 
-  order = orderType => {
-      //sort list of users either asc or desc
-  }
+  // order = orderType => {
+  //     //sort list of users either asc or desc
+  // }
 
   search = qry => {
     API.search(qry)
@@ -33,27 +28,26 @@ class DirectoryContainer extends Component {
       .catch(err => console.log(err));
   };
 
-  handleInputChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({
-      [name]: value
-    });
-  };
+  // handleInputChange = event => {
+  //   const name = event.target.name;
+  //   const value = event.target.value;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // };
 
   // When the form is submitted, search the Giphy API for `this.state.search`
-  handleFormSubmit = event => {
-    event.preventDefault();
-    this.setState({
-      results: this.search()
-    })
-    
-  };
+  // handleFormSubmit = event => {
+  //   event.preventDefault();
+  //   this.setState({
+  //     results: this.search()
+  //   })
+  // };
 
   render() {
     return (
       <div>
-        {/* <ResultList props={[...this.state.results]} /> */}
+        <ResultList results={this.state.results} />
       </div>
     );
   }
