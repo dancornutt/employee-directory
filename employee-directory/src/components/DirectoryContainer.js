@@ -5,9 +5,11 @@ import API from "../utils/API";
 
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
 
 class DirectoryContainer extends Component {
   state = {
+    sortAsc: true,
     search: "",
     results: []
   };
@@ -39,6 +41,23 @@ class DirectoryContainer extends Component {
   //   });
   // };
 
+  toggleSort = () => {
+    let newSortArr;
+    let newSort = !this.state.sortAsc;
+    console.log("sortAsc ", newSort);
+    if (newSort) {
+      newSortArr = this.state.results.sort((a, b) => (a.name.last > b.name.last) ? 1 : -1);
+    } else {
+      newSortArr = this.state.results.sort((b, a) => (a.name.last > b.name.last) ? 1 : -1);
+
+    }
+    this.setState({
+      results: newSortArr,
+      sortAsc: newSort
+    })
+  }
+
+
   // When the form is submitted, search the Giphy API for `this.state.search`
   // handleFormSubmit = event => {
   //   event.preventDefault();
@@ -56,6 +75,8 @@ class DirectoryContainer extends Component {
             <p>
               This is a random list of people to view.
             </p>
+            <Button variant="primary" onClick={ (this.toggleSort)}>Sorted ASC</Button>
+            
           </Container>
         </Jumbotron>
       <ResultList results={this.state.results} />
