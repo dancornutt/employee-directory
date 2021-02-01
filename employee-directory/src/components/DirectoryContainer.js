@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import SearchForm from "./SearchForm";
 import ResultList from "./ResultList";
 import API from "../utils/API";
 
@@ -10,61 +9,54 @@ import Button from 'react-bootstrap/Button'
 class DirectoryContainer extends Component {
   state = {
     sortAsc: true,
-    search: "",
-    results: []
+    first: "",
+    last: "",
+    apiList: [],
+    display: []
   };
 
-  // When this component mounts, search 10 rados
+  // When this component mounts, search 20 rados
   componentDidMount() {
-      this.search(10);
+    this.search(20);
   }
 
-  // order = orderType => {
-  //     //sort list of users either asc or desc
-  // }
-
+  //Search API and update state with results
   search = qry => {
     API.search(qry)
       .then(res => {
-        console.log("Prior to API Call", this.state.results);
-        this.setState({results: [...res.data.results]});
-        console.log("Post to API Call", this.state.results);
+        this.setState(
+          { display: [...res.data.results], apiList: [...res.data.results] }
+        );
       })
       .catch(err => console.log(err));
   };
 
-  // handleInputChange = event => {
-  //   const name = event.target.name;
-  //   const value = event.target.value;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
+  //Update UI based input from user
+  handleInputChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({[name]: value});
+    this.setState(
+      { display: this.state.apiList.filter(
+        person => person.name[name].toLowerCase().includes(value.toLowerCase())) }
+    );
+  };
 
+  //Toggle display list from ASC to DESC
   toggleSort = () => {
     let newSortArr;
     let newSort = !this.state.sortAsc;
-    console.log("sortAsc ", newSort);
     if (newSort) {
-      newSortArr = this.state.results.sort((a, b) => (a.name.last > b.name.last) ? 1 : -1);
+      newSortArr = this.state.display.sort((a, b) => (a.name.last > b.name.last) ? 1 : -1);
     } else {
-      newSortArr = this.state.results.sort((b, a) => (a.name.last > b.name.last) ? 1 : -1);
+      newSortArr = this.state.display.sort((b, a) => (a.name.last > b.name.last) ? 1 : -1);
 
     }
     this.setState({
-      results: newSortArr,
+      display: newSortArr,
       sortAsc: newSort
     })
   }
-
-
-  // When the form is submitted, search the Giphy API for `this.state.search`
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
-  //   this.setState({
-  //     results: this.search()
-  //   })
-  // };
 
   render() {
     return (
@@ -75,11 +67,27 @@ class DirectoryContainer extends Component {
             <p>
               This is a random list of people to view.
             </p>
-            <Button variant="primary" onClick={ (this.toggleSort)}>Sorted ASC</Button>
             
+            <form className="form">
+              <input
+                value={this.state.first}
+                name="first"
+                onChange={this.handleInputChange}
+                type="text"
+                placeholder="Filter First Name"
+              />
+              <input
+                value={this.state.last}
+                name="last"
+                onChange={this.handleInputChange}
+                type="text"
+                placeholder="Filter Last Name"
+              />
+            </form>
+            <Button variant="primary" onClick={(this.toggleSort)}>Toggle Sorted Last Name</Button>
           </Container>
         </Jumbotron>
-      <ResultList results={this.state.results} />
+        <ResultList display={this.state.display} />
       </div>
     );
   }

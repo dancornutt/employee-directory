@@ -3,10 +3,9 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
 function ResultList(props) {
-  console.log("From ResultList", props);
   return (
     <ul className="list-group">
-      {props.results.map(result => (
+      {props.display.map(result => (
         <Card style={{ width: '25rem' }} key={result.login.uuid}>
         <Card.Img variant="top" src={result.picture.large} />
           <Card.Body>
