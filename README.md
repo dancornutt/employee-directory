@@ -2,7 +2,7 @@
 
 This project is centered on creating a site to help company admin see their team members and attributes of each team member. This is the first web app build using react.
 
-![Employee Directory App](https://github.com/dancornutt/UWB-05HW-DayPlanner/blob/master/images/DayPlanner.png)
+![Employee Directory App](https://github.com/dancornutt/employee-directory/blob/main/assets/employee-directory.png)
 
 ## Getting Started
 
